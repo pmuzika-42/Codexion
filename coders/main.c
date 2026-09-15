@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   codexion.c                                         :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmuzika <pmuzika@student.42malaga.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/06 14:26:19 by pmuzika           #+#    #+#             */
-/*   Updated: 2026/08/08 20:23:27 by pmuzika          ###   ########.fr       */
+/*   Updated: 2026/09/15 14:11:22 by pmuzika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ int	validate_numerical_args(char **argv)
 	i = 0;
 	while (i < 7)
 	{
-		if (!ft_str_is_int(argv[i]))
+		if ((!ft_str_is_int(argv[i])) || atoi(argv[i] <= 0))
 		{
-			printf("Error in arg number %d\n", i);
+			printf("Invalid arg number %d\n", i);
 			return (0);
 		}
 		i++;
@@ -36,8 +36,13 @@ int	validate_numerical_args(char **argv)
 	return (1);
 }
 
-int	validate_all_args(char **argv)
+int	validate_all_args(int argc, char **argv)
 {
+	if (argc != 8)
+	{
+		printf("Program needs to receive exactly 8 arguments\n");
+		return (0);
+	}
 	if (!validate_numerical_args(argv))
 	{
 		printf("Error in numerical args\n");
@@ -51,17 +56,17 @@ int	validate_all_args(char **argv)
 	return (1);
 }
 
-void	save_args(t_codexion_args **args, char **argv)
-{
-	(*args)->number_of_coders = atoi(argv[0]);
-	(*args)->time_to_burnout = atoi(argv[1]);
-	(*args)->time_to_compile = atoi(argv[2]);
-	(*args)->time_to_debug = atoi(argv[3]);
-	(*args)->time_to_refactor = atoi(argv[4]);
-	(*args)->number_of_compiles_required = atoi(argv[5]);
-	(*args)->dongle_cooldown = atoi(argv[6]);
-	ft_strcpy((*args)->scheduler, argv[7]);
-}
+// void	save_args(t_codexion_args **args, char **argv)
+// {
+// 	(*args)->number_of_coders = atoi(argv[0]);
+// 	(*args)->time_to_burnout = atoi(argv[1]);
+// 	(*args)->time_to_compile = atoi(argv[2]);
+// 	(*args)->time_to_debug = atoi(argv[3]);
+// 	(*args)->time_to_refactor = atoi(argv[4]);
+// 	(*args)->number_of_compiles_required = atoi(argv[5]);
+// 	(*args)->dongle_cooldown = atoi(argv[6]);
+// 	ft_strcpy((*args)->scheduler, argv[7]);
+// }
 
 // void    print_args(t_codexion_args *args)
 // {
@@ -77,23 +82,23 @@ void	save_args(t_codexion_args **args, char **argv)
 //     printf("-----------------------------\n");
 // }
 
+
 int	main(int argc, char **argv)
 {
-	t_codexion_args	*args;
+	t_program	program;
+	t_coder		*coders;
+	t_dongle	*dongles;
+	int			nb_of_coders;
 
-	if (argc != 9)
-	{
-		printf("Program needs to receive exactly 8 arguments\n");
+	if (!validate_all_args(argc - 1, argv++))
 		return (1);
-	}
-	argv++;
-	if (!validate_all_args(argv))
-		return (1);
-	args = malloc(sizeof(t_codexion_args));
-	if (!args)
-		return (-1);
-	save_args(&args, argv);
-	print_args(args);
-	free(args);
+	nb_of_coders = atoi(argv[0]);
+	coders = malloc(sizeof(t_coder) * nb_of_coders);
+	dongles = malloc(sizeof(t_dongle) * nb_of_coders);
+	init_all(&program, coders, dongles, argv)
+	//Call a function that launches simulation and creates the thread
+	//thread_create(&program);
+	// Call a function that frees all the memory
+	//free_memory(program, coders, dongles);
 	return (0);
 }
