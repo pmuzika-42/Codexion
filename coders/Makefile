@@ -6,7 +6,7 @@
 #    By: pmuzika <pmuzika@student.42malaga.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/08/06 14:22:57 by pmuzika           #+#    #+#              #
-#    Updated: 2026/08/07 21:17:14 by pmuzika          ###   ########.fr        #
+#    Updated: 2026/09/27 20:28:05 by pmuzika          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,14 +16,17 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -pthread
 
-SRC = coders/codexion.c \
-		coders/codexion_utils.c
+SRC =	main.c \
+		utils.c \
+		init.c \
+		monitor.c \
+		parsing.c \
+		compile.c \
+		scheduler.c \
+		threads.c \
+		heap.c
 
 OBJ = $(SRC:.c=.o)
-
-# all:
-# 	cc -Wall -Wextra -Werror -pthread coders/codexion.c coders/codexion_utils.c -o codexion
-
 
 all: $(NAME)
 
