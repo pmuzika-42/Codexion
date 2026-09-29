@@ -6,7 +6,7 @@
 /*   By: pmuzika <pmuzika@student.42malaga.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/14 19:18:56 by pmuzika           #+#    #+#             */
-/*   Updated: 2026/09/27 21:08:47 by pmuzika          ###   ########.fr       */
+/*   Updated: 2026/09/28 16:40:28 by pmuzika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,13 @@ int	dongle_is_cold(t_dongle *dongle, size_t cooldown)
 size_t	deadline(t_coder *coder)
 {
 	size_t	time_to_burnout;
+	size_t	last_compile_start;
 
+	pthread_mutex_lock(&coder->program->compile_lock);
+	last_compile_start = coder->last_compile_start;
+	pthread_mutex_unlock(&coder->program->compile_lock);
 	time_to_burnout = coder->program->time_to_burnout;
-	return (coder->last_compile_start + time_to_burnout);
+	return (last_compile_start + time_to_burnout);
 }
 
 // Look for request in heap with priority

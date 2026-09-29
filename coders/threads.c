@@ -6,7 +6,7 @@
 /*   By: pmuzika <pmuzika@student.42malaga.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/14 20:04:51 by pmuzika           #+#    #+#             */
-/*   Updated: 2026/09/27 21:16:03 by pmuzika          ###   ########.fr       */
+/*   Updated: 2026/09/28 14:57:35 by pmuzika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void	*coding_routine(void *pointer)
 	}
 	while (!finished_loop(coder))
 	{
-		compile(coder);
+		if (!compile(coder))
+			break ;
 		print_log("is debugging", coder);
 		ft_usleep(coder->program->time_to_debug);
 		print_log("is refactoring", coder);
@@ -62,7 +63,7 @@ int	thread_create(t_program *program)
 	{
 		if (pthread_create(&program->coders[i].thread, NULL, &coding_routine,
 				&program->coders[i]) != 0)
-			return (1);
+			return (join_threads(program, &observer, i));
 		i++;
 	}
 	i = 0;
@@ -75,6 +76,24 @@ int	thread_create(t_program *program)
 		i++;
 	}
 	return (0);
+}
+
+// If one thread fails to create, join previously created threads
+
+int	join_threads(t_program *program, pthread_t	*observer, int j)
+{
+	int	i;
+
+	i = 0;
+	if (pthread_join(*observer, NULL) != 0)
+		return (2);
+	while (i < j)
+	{
+		if (pthread_join(program->coders[i].thread, NULL) != 0)
+			return (2);
+		i++;
+	}
+	return (1);
 }
 
 // Control output of thread_create function in case of error

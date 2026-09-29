@@ -6,7 +6,7 @@
 /*   By: pmuzika <pmuzika@student.42malaga.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/14 18:39:20 by pmuzika           #+#    #+#             */
-/*   Updated: 2026/09/23 22:34:40 by pmuzika          ###   ########.fr       */
+/*   Updated: 2026/09/28 15:06:18 by pmuzika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	attempt_loop(t_coder *coder, t_request request)
 	t_program	*p;
 
 	p = coder->program;
+	result = 0;
 	while (!finished_loop(coder))
 	{
 		result = try_take_dongles(coder, request);
@@ -71,18 +72,18 @@ void	release_dongles(t_coder *coder)
 
 // take dongles, compile and release dongles
 
-void	compile(t_coder *coder)
+int	compile(t_coder *coder)
 {
-	if (take_dongles(coder) == 1)
-	{
-		print_log("has taken a dongle", coder);
-		print_log("has taken a dongle", coder);
-		print_log("is compiling", coder);
-		pthread_mutex_lock(&coder->program->compile_lock);
-		coder->last_compile_start = get_current_time();
-		coder->compiles_achieved++;
-		pthread_mutex_unlock(&coder->program->compile_lock);
-		ft_usleep(coder->program->time_to_compile);
-		release_dongles(coder);
-	}
+	if (!take_dongles(coder))
+		return (0);
+	print_log("has taken a dongle", coder);
+	print_log("has taken a dongle", coder);
+	print_log("is compiling", coder);
+	pthread_mutex_lock(&coder->program->compile_lock);
+	coder->last_compile_start = get_current_time();
+	coder->compiles_achieved++;
+	pthread_mutex_unlock(&coder->program->compile_lock);
+	ft_usleep(coder->program->time_to_compile);
+	release_dongles(coder);
+	return (1);
 }
