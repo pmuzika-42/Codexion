@@ -185,7 +185,7 @@ The following cases are useful for testing the implementation.
 ### Basic FIFO execution
 
 ```bash
-./codexion 3 800 150 150 150 3 100 fifo
+./codexion 3 800 150 150 150 3 50 fifo
 ```
 
 Tests a normal multi-coder simulation using FIFO arbitration.
@@ -193,7 +193,7 @@ Tests a normal multi-coder simulation using FIFO arbitration.
 ### Basic EDF execution
 
 ```bash
-./codexion 3 800 150 150 150 3 100 edf
+./codexion 3 800 150 150 150 3 50 edf
 ```
 
 Tests the same general workload using Earliest Deadline First scheduling.
@@ -206,13 +206,13 @@ Tests the same general workload using Earliest Deadline First scheduling.
 
 Tests the special case where only one dongle exists.
 
-### Very short cooldown
+### No cooldown
 
 ```bash
-./codexion 5 800 200 200 200 3 1 fifo
+./codexion 5 800 200 200 200 3 0 fifo
 ```
 
-Tests resource reuse with almost no cooldown.
+Tests resource reuse with no cooldown.
 
 ### Long cooldown
 
@@ -220,7 +220,7 @@ Tests resource reuse with almost no cooldown.
 ./codexion 5 800 200 200 200 3 300 fifo
 ```
 
-Creates stronger contention around recently released dongles.
+Creates stronger contention around recently released dongles. Will cause burnout.
 
 ### High contention
 
@@ -238,13 +238,13 @@ Useful for testing the arbitration system with several simultaneous requests.
 
 Tests the EDF priority calculation when many coders compete for the same resources.
 
-### Tight burnout deadline
+### Inevitable burnout
 
 ```bash
 ./codexion 5 500 200 200 200 2 10 edf
 ```
 
-Useful for testing burnout detection and deadline handling.
+Useful for testing burnout detection.
 
 ### Minimal compilation requirement
 

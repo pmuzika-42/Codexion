@@ -6,7 +6,7 @@
 /*   By: pmuzika <pmuzika@student.42malaga.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/15 17:30:56 by pmuzika           #+#    #+#             */
-/*   Updated: 2026/09/23 21:45:40 by pmuzika          ###   ########.fr       */
+/*   Updated: 2026/09/29 17:23:58 by pmuzika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	all_compiles_achieved(t_coder *coders)
 
 // Monitor thread routine
 
-void	*monitor(void *pointer)
+void	*monitor_routine(void *pointer)
 {
 	t_coder	*coders;
 

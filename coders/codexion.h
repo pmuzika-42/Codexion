@@ -6,7 +6,7 @@
 /*   By: pmuzika <pmuzika@student.42malaga.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/06 14:29:14 by pmuzika           #+#    #+#             */
-/*   Updated: 2026/09/28 15:08:07 by pmuzika          ###   ########.fr       */
+/*   Updated: 2026/09/29 17:24:32 by pmuzika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void		create_and_control_threads(t_program *program);
 // monitor
 int			coder_burned_out(t_coder *coders);
 int			all_compiles_achieved(t_coder *coders);
-void		*monitor(void *pointer);
+void		*monitor_routine(void *pointer);
 
 // compile
 int			attempt_loop(t_coder *coder, t_request request);

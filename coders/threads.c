@@ -6,7 +6,7 @@
 /*   By: pmuzika <pmuzika@student.42malaga.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/14 20:04:51 by pmuzika           #+#    #+#             */
-/*   Updated: 2026/09/28 14:57:35 by pmuzika          ###   ########.fr       */
+/*   Updated: 2026/09/29 17:24:18 by pmuzika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int	thread_create(t_program *program)
 	pthread_t	observer;
 	int			i;
 
-	if (pthread_create(&observer, NULL, &monitor, program->coders) != 0)
+	if (pthread_create(&observer, NULL, &monitor_routine,
+			program->coders) != 0)
 		return (1);
 	i = 0;
 	while (i < program->number_of_coders)
@@ -104,7 +105,7 @@ void	create_and_control_threads(t_program *program)
 
 	control = thread_create(program);
 	if (control == 1)
-		printf("Thread creation error");
+		write(2, "Thread creation error\n", 23);
 	if (control == 2)
-		printf("Thread join error");
+		write(2, "Thread join error\n", 19);
 }
